@@ -1,0 +1,43 @@
+{{ define "modules/user/html/information_edit" }}
+    {{ template "templates/layouts/html/head" .}}
+    {{ template "templates/layouts/html/navbar" .}}
+    {{ template "templates/layouts/html/header" .}}
+
+    <!-- Begin Form
+    ================================================== -->
+    <div class="article-form-container">
+        <div class="row">
+            <div class="col-md-12">
+                        <form action="/information/update" method="POST" enctype="multipart/form-data">
+                            <div class="form-group">
+                                <label class="h4 form-control-label" for="name">用户名</label>
+                                <input type="text" class="form-control" id="name" name="name" value="{{ .user.Name }}" required>
+                                <span class="text-danger">{{ .ERRORS.name }}</span>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="h4 form-control-label" for="email">邮箱</label>
+                                <input type="email" class="form-control" id="email" name="email" value="{{ .user.Email }}" required>
+                                <span class="text-danger">{{ .ERRORS.email }}</span>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="h4 form-control-label" for="password">密码</label>
+                                <input type="password" class="form-control" id="password" name="password">
+                                <span class="text-danger">{{ .ERRORS.password }}</span>
+                            </div>
+
+                            <div class="form-group">
+                                <button type="submit" class="btn btn-primary">保存</button>
+                                <a href="/information" class="btn btn-secondary">返回</a>
+                            </div>
+                        </form>
+            </div>
+        </div>
+    </div>
+    <!-- End Form
+    ================================================== -->
+
+    {{ template "templates/layouts/html/footer" .}}
+    {{ template "templates/layouts/html/foot" .}}
+{{ end }}

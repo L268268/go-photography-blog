@@ -1,0 +1,42 @@
+{{ define "modules/article/html/edit" }}
+    {{ template "templates/layouts/html/head".}}
+    {{ template "templates/layouts/html/navbar".}}
+    {{ template "templates/layouts/html/header".}}
+
+    <!-- Begin Form
+    ================================================== -->
+    <div class="col-md-12 col-xs-12">
+        <form class="article-form-container" action="/articles/{{ .article.ID }}/update" method="POST" enctype="multipart/form-data">
+            <div class="form-group">
+                <label class="h4 form-control-label" for="title">标题</label>
+                <input type="text" class="form-control" name="title" id="title" placeholder="Title" required value="{{ .article.Title }}">
+                <span class="text-danger">{{ .ERRORS.title }}</span>
+            </div>
+
+            <div class="form-group">
+                <div>
+                    <img src="{{ .article.Image }}" alt="{{ .article.Title }}" class="img-fluid mb-3" style="max-width: 300px;">
+                </div>
+                <label class="h4 form-control-label" for="new_image">图片</label>
+                <input type="file" class="form-control" name="new_image" id="new_image" accept="image/*">
+                <span class="text-danger">{{ .ERRORS.new_image }}</span>
+            </div>
+
+            <div class="form-group">
+                <label class="h4 form-control-label" for="content">内容</label>
+                <textarea class="form-control" name="content" id="content" placeholder="Content" required rows="10">{{ .article.Content }}</textarea>
+                <span class="text-danger">{{ .ERRORS.content }}</span>
+            </div>
+
+            <div>
+                <button type="submit" class="btn btn-primary">保存</button>
+                <a href="/articles/{{ .article.ID }}" class="btn btn-secondary">返回</a>
+            </div>
+        </form>
+    </div>
+    <!-- End Form
+    ================================================== -->
+
+    {{ template "templates/layouts/html/footer".}}
+    {{ template "templates/layouts/html/foot".}}
+{{ end }}

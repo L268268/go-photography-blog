@@ -1,0 +1,98 @@
+{{ define "modules/article/html/show" }}
+    {{ template "templates/layouts/html/head" .}}
+    {{ template "templates/layouts/html/navbar" .}}
+    {{ template "templates/layouts/html/header" .}}
+
+    <!-- Begin Article
+    ================================================== -->
+    <div class="container">
+        <div class="row">
+
+            <!-- Begin Post -->
+            <div class="col-md-8 col-md-offset-2 col-xs-12">
+                <div class="mainheading">
+
+                    <!-- Begin Top Meta -->
+                    <div class="row post-top-meta">
+                        <div class="col-md-2">
+                            <a href="#"><img class="author-thumb" src="{{ .article.User.Image }}" alt="{{ .article.User.Name }}"></a>
+                        </div>
+                        <div class="col-md-10">
+                            <a class="link-dark" href="#">{{ .article.User.Name }}</a><a href="#" class="btn follow">Follow</a>
+                            <span class="author-description">欢迎来到摄影小天地！在这里你可以尽情发布有关摄影的文章例如摄影技巧、摄影器材测评以及摄影作品等，也可以看到捕捉瞬间的艺术、镜头下的自然奇观以及夜景与星空摄影等。那么接下来让我们一起来感觉镜头的魅力吧！</span>
+                            <span class="post-date">{{ .article.CreatedAt }}</span><span class="dot"></span><span class="post-read">6 min read</span>
+                        </div>
+                    </div>
+                    <!-- End Top Menta -->
+
+                    <h1 class="posttitle">{{ .article.Title }}</h1>
+
+                </div>
+
+                <!-- Begin Featured Image -->
+                <img class="featured-image img-fluid" src="{{ .article.Image }}" alt="{{ .article.Title }}">
+                <!-- End Featured Image -->
+
+                <!-- Begin Post Content -->
+                <div class="article-post">
+                    {{ .article.Content }}
+                </div>
+                <!-- End Post Content -->
+                
+                <!-- Begin Edit -->
+                <div class="after-post-tags">
+                    <ul class="tags">
+                        <li><a href="/articles/{{ .article.ID }}/edit" class="btn btn-primary">编辑文章</a></li>
+                        <li><a onclick="deleteArticle({{ .article.ID }})" class="btn btn-danger">删除文章</a></li>
+                    
+                    </ul>
+                </div>
+                <!-- End Tags -->
+
+            </div>
+            <!-- End Post -->
+
+            <!-- Begin Comments
+        ================================================== -->
+        
+                            <form action="/comments" method="POST">
+                                <input type="hidden" name="article_id" value="{{ .article.ID }}">
+                                <div class="form-group">
+                                    <textarea class="form-control" name="content" rows="3" required placeholder="评论"></textarea>
+                                    <span class="text-danger">{{ .ERRORS.content }}</span>
+                                </div>
+                                <button type="submit" class="btn btn-primary">发表评论</button>
+                            </form>
+                        
+        </div>
+    </div>
+        <!-- End Comments
+        ================================================== -->
+
+        </div>
+    </div>
+    <!-- End Article
+    ================================================== -->
+     <script>
+    function deleteArticle(id) {
+        if (confirm('您确定要删除这篇文章吗？')) {
+            fetch('/articles/' + id, {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            }).then(response => response.json())
+              .then(data => {
+                  if (data.error) {
+                      alert(data.error);
+                  } else {
+                      window.location.href = '/';
+                  }
+              });
+        }
+    }
+    </script>
+
+    {{ template "templates/layouts/html/footer" .}}
+    {{ template "templates/layouts/html/foot" .}}
+{{ end }}

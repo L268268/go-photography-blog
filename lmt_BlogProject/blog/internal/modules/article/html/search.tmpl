@@ -1,0 +1,57 @@
+{{ define "modules/article/html/search" }}
+    {{ template "templates/layouts/html/head" .}}
+    {{ template "templates/layouts/html/navbar" .}}
+
+    <!-- Begin Article List
+    ================================================== -->
+    <div class="container">
+        <div class="main-content">
+            <!-- Begin Search Form -->
+            <div class="row mb-4">
+                <div class="col-md-8 mx-auto">
+                    <form action="/articles/search" method="GET" class="search-form">
+                    </form>
+                </div>
+            </div>
+            <!-- End Search Form -->
+
+            <!-- Begin Search Results -->
+            <div class="row">
+                {{ if .keyword }}
+                    <div class="col-md-12">
+                        <h4 class="mb-4">已为您找到 {{ len .articles.Data }} 篇相关文章，请点击此页面的图片或标题进行全文阅读</h4>
+                    </div>
+                {{ end }}
+            </div>
+
+            <div class="row">
+                    {{ range .articles.Data }}
+                    <div class="card">
+                        <div class="row">
+                            <a href="/articles/{{ .ID }}">
+                            <div class="col-md-5 wrapthumbnail">
+                                <img class="card-img-top" src="{{ .Image }}" alt="{{ .Title }}">
+                            </div>
+                            </a>
+                            <div class="col-md-7">
+                            <div class="card-block">
+                            <div class="card-body">
+                                <h2 class="card-title">
+                                    <a href="/articles/{{ .ID }}" class="text-dark">{{ .Title }}</a>
+                                </h2>
+                            </div>
+                            </div>
+                            </div>
+                        </div>
+                    </div>
+                    {{ end }}
+            </div>
+            <!-- End Search Results -->
+        </div>
+    </div>
+    <!-- End Article List
+    ================================================== -->
+
+    {{ template "templates/layouts/html/footer" .}}
+    {{ template "templates/layouts/html/foot" .}}
+{{ end }} 

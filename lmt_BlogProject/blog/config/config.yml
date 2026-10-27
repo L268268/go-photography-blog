@@ -1,0 +1,13 @@
+app:
+  name: "光影捕梦阁：探索摄影的奇幻世界"
+
+server:
+  host: "localhost"
+  port: "8080"
+
+db:
+  username: "root"
+  password: "123456"
+  host: "127.0.0.1"
+  port: "3306"
+  name: "blog"
